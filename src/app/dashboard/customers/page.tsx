@@ -1,10 +1,9 @@
 import { Suspense } from 'react';
 
-import { getCustomersTotalPages } from './actions/get-total-pages.action';
-
 import { Paginated, Search, SkeletonTable } from '@/components';
 import CreateCustomers from './components/CreateCustomers';
 import CustomersTable from './components/CustomersTable';
+import { getPaginatedCustomers } from './actions/get-paginated.action';
 
 export default async function CustomersPage({
 	searchParams,
@@ -17,7 +16,7 @@ export default async function CustomersPage({
 	const query = searchParams?.query || '';
 	const currentPage = Number(searchParams?.page) || 1;
 
-	const totalPages = await getCustomersTotalPages(query);
+	const { totalPages } = await getPaginatedCustomers(query);
 
 	return (
 		<div className="p-4 mt-6">

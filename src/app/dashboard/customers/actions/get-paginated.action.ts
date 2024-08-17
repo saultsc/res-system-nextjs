@@ -4,30 +4,51 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getPaginatedCustomers = async (query: string, currentPage: number) => {
+export const getPaginatedCustomers = async (query: string, currentPage: number = 1) => {
 	const rowsPerPage = 10;
 	const skip = (currentPage - 1) * rowsPerPage;
 
-	const customers = await prisma.cliente.findMany({
-		where: {
-			OR: [
-				{
-					nombre: {
-						contains: query,
+	const [customers, totalItems] = await Promise.all([
+		prisma.cliente.findMany({
+			where: {
+				OR: [
+					{
+						nombre: {
+							contains: query,
+						},
 					},
-				},
-				{
-					email: {
-						contains: query,
+					{
+						email: {
+							contains: query,
+						},
 					},
-				},
-			],
-		},
-		take: rowsPerPage,
-		skip,
-	});
+				],
+			},
+			take: rowsPerPage,
+			skip,
+		}),
+		prisma.cliente.count({
+			where: {
+				OR: [
+					{
+						nombre: {
+							contains: query,
+						},
+					},
+					{
+						email: {
+							contains: query,
+						},
+					},
+				],
+			},
+		}),
+	]);
+
+	const totalPages = Math.ceil(totalItems / rowsPerPage);
 
 	return {
 		customers,
+		totalPages,
 	};
 };

@@ -1,10 +1,10 @@
 'use client';
 
 import { usePathname, useSearchParams } from 'next/navigation';
-
 import {
 	Pagination,
 	PaginationContent,
+	PaginationEllipsis,
 	PaginationItem,
 	PaginationLink,
 	PaginationNext,
@@ -28,7 +28,31 @@ export const Paginated = ({ totalPages }: Props) => {
 
 	const renderPaginationItems = () => {
 		const items = [];
-		for (let i = 1; i <= totalPages; i++) {
+
+		// Always show the first page
+		items.push(
+			<PaginationItem key={1}>
+				<PaginationLink href={createPageUrl(1)} isActive={1 === currentPage}>
+					1
+				</PaginationLink>
+			</PaginationItem>
+		);
+
+		// Ellipsis if necessary
+		if (currentPage > 4) {
+			items.push(
+				<PaginationItem key="start-ellipsis">
+					<PaginationEllipsis />
+				</PaginationItem>
+			);
+		}
+
+		// Pages around the current page, maximum of 3 pages in the middle
+		for (
+			let i = Math.max(2, currentPage - 1);
+			i <= Math.min(totalPages - 1, currentPage + 1);
+			i++
+		) {
 			items.push(
 				<PaginationItem key={i}>
 					<PaginationLink href={createPageUrl(i)} isActive={i === currentPage}>
@@ -37,6 +61,30 @@ export const Paginated = ({ totalPages }: Props) => {
 				</PaginationItem>
 			);
 		}
+
+		// Ellipsis if necessary
+		if (currentPage < totalPages - 3) {
+			items.push(
+				<PaginationItem key="end-ellipsis">
+					<PaginationEllipsis />
+				</PaginationItem>
+			);
+		}
+
+		// Always show the last page
+		if (totalPages > 1) {
+			items.push(
+				<PaginationItem key={totalPages}>
+					<PaginationLink
+						href={createPageUrl(totalPages)}
+						isActive={totalPages === currentPage}
+					>
+						{totalPages}
+					</PaginationLink>
+				</PaginationItem>
+			);
+		}
+
 		return items;
 	};
 
@@ -50,16 +98,14 @@ export const Paginated = ({ totalPages }: Props) => {
 				<PaginationContent>
 					<PaginationItem>
 						<PaginationPrevious
-							href={createPageUrl(currentPage - 1)}
-							className={currentPage === 1 ? 'disabled' : ''}
+							href={currentPage > 1 ? createPageUrl(currentPage - 1) : '#'}
 							onClick={currentPage === 1 ? handleDisabledClick : undefined}
 						/>
 					</PaginationItem>
 					{renderPaginationItems()}
 					<PaginationItem>
 						<PaginationNext
-							href={createPageUrl(currentPage + 1)}
-							className={currentPage === totalPages ? 'disabled' : ''}
+							href={currentPage < totalPages ? createPageUrl(currentPage + 1) : '#'}
 							onClick={currentPage === totalPages ? handleDisabledClick : undefined}
 						/>
 					</PaginationItem>
