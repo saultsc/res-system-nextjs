@@ -16,8 +16,6 @@ export default async function CustomersPage({
 	const query = searchParams?.query || '';
 	const currentPage = Number(searchParams?.page) || 1;
 
-	const { totalPages } = await getPaginatedCustomers(query);
-
 	return (
 		<div className="p-4 mt-6">
 			<div className="flex items-center justify-between space-x-4 mb-4">
@@ -28,7 +26,6 @@ export default async function CustomersPage({
 			<div>
 				<Suspense key={query + currentPage} fallback={<SkeletonTable />}>
 					<CustomersTable currentPage={currentPage} query={query} />
-					<Paginated totalPages={totalPages} />
 				</Suspense>
 			</div>
 		</div>

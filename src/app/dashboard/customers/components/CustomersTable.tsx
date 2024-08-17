@@ -4,6 +4,7 @@ import {
 	CardContent,
 	CardHeader,
 	CardTitle,
+	Paginated,
 	Table,
 	TableBody,
 	TableCell,
@@ -33,7 +34,7 @@ type Customer = {
 };
 
 export const CustomersTable = async ({ currentPage, query }: QueryParams) => {
-	const { customers } = await getPaginatedCustomers(query, currentPage);
+	const { customers, totalPages } = await getPaginatedCustomers(query, currentPage);
 
 	return (
 		<div>
@@ -81,6 +82,7 @@ export const CustomersTable = async ({ currentPage, query }: QueryParams) => {
 							</TableBody>
 						</Table>
 					</div>
+					<Paginated totalPages={totalPages} />
 				</CardContent>
 			</Card>
 		</div>

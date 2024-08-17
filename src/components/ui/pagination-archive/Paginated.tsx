@@ -29,7 +29,7 @@ export const Paginated = ({ totalPages }: Props) => {
 	const renderPaginationItems = () => {
 		const items = [];
 
-		// Always show the first page
+		// Siempre mostrar la primera página
 		items.push(
 			<PaginationItem key={1}>
 				<PaginationLink href={createPageUrl(1)} isActive={1 === currentPage}>
@@ -38,7 +38,7 @@ export const Paginated = ({ totalPages }: Props) => {
 			</PaginationItem>
 		);
 
-		// Ellipsis if necessary
+		// Elipsis si es necesario
 		if (currentPage > 4) {
 			items.push(
 				<PaginationItem key="start-ellipsis">
@@ -47,7 +47,7 @@ export const Paginated = ({ totalPages }: Props) => {
 			);
 		}
 
-		// Pages around the current page, maximum of 3 pages in the middle
+		// Páginas alrededor de la página actual, máximo de 3 páginas en el medio
 		for (
 			let i = Math.max(2, currentPage - 1);
 			i <= Math.min(totalPages - 1, currentPage + 1);
@@ -62,7 +62,7 @@ export const Paginated = ({ totalPages }: Props) => {
 			);
 		}
 
-		// Ellipsis if necessary
+		// Elipsis si es necesario
 		if (currentPage < totalPages - 3) {
 			items.push(
 				<PaginationItem key="end-ellipsis">
@@ -71,7 +71,7 @@ export const Paginated = ({ totalPages }: Props) => {
 			);
 		}
 
-		// Always show the last page
+		// Siempre mostrar la última página
 		if (totalPages > 1) {
 			items.push(
 				<PaginationItem key={totalPages}>
@@ -94,7 +94,7 @@ export const Paginated = ({ totalPages }: Props) => {
 
 	return (
 		<div>
-			<Pagination className="mt-4">
+			<Pagination className="mt-2">
 				<PaginationContent>
 					<PaginationItem>
 						<PaginationPrevious
