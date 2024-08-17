@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("MYSQL_URL")
+}
+
+model categoria {
+  id     Int    @id @default(autoincrement())
+  nombre String @unique
+}
+
+model cliente {
+  id            Int     @id @default(autoincrement())
+  tipoCliente   String
+  documento     Int
+  rnc           String?
+  nombre        String?
+  dirrecion     String?
+  email         String?
+  limiteCredito Float
+  telefonno     String?
+}
+
+model departamento {
+  id        Int    @id @default(autoincrement())
+  nombre    String @unique
+  provincia String
+}
+
+model medida {
+  id     Int    @id @default(autoincrement())
+  nombre String @unique
+}
+
+model mesa {
+  id        Int         @id @default(autoincrement())
+  nombre    String      @unique
+  estado    mesa_estado @default(disponible)
+  capacidad Int
+  salamesa  salamesa[]
+}
+
+model sala {
+  id       Int        @id @default(autoincrement())
+  nombre   String     @unique
+  salamesa salamesa[]
+}
+
+model salamesa {
+  salaId Int
+  mesaId Int
+  mesa   mesa @relation(fields: [mesaId], references: [id], map: "SalaMesa_mesaId_fkey")
+  sala   sala @relation(fields: [salaId], references: [id], map: "SalaMesa_salaId_fkey")
+
+  @@id([salaId, mesaId])
+  @@index([mesaId], map: "SalaMesa_mesaId_fkey")
+}
+
+model user {
+  id       Int       @id @default(autoincrement())
+  fullName String
+  email    String    @unique(map: "User_email_key")
+  password String
+  role     user_role @default(user)
+}
+
+enum mesa_estado {
+  reservada
+  ocupada
+  disponible
+}
+
+enum user_role {
+  admin
+  user
+}
