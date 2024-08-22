@@ -15,12 +15,12 @@ model categoria {
 model cliente {
   id            Int     @id @default(autoincrement())
   tipoCliente   String
-  documento     Int
+  documento     String
   rnc           String?
   nombre        String?
   dirrecion     String?
   email         String?
-  limiteCredito Float
+  limiteCredito String
   telefonno     String?
 }
 
@@ -30,17 +30,12 @@ model departamento {
   provincia String
 }
 
-model medida {
-  id     Int    @id @default(autoincrement())
-  nombre String @unique
-}
-
 model mesa {
-  id        Int         @id @default(autoincrement())
-  nombre    String      @unique
-  estado    mesa_estado @default(disponible)
-  capacidad Int
-  salamesa  salamesa[]
+  id          Int        @id @default(autoincrement())
+  nombre      String     @unique
+  capacidad   Int
+  descripcion String
+  salamesa    salamesa[]
 }
 
 model sala {
@@ -65,12 +60,6 @@ model user {
   email    String    @unique(map: "User_email_key")
   password String
   role     user_role @default(user)
-}
-
-enum mesa_estado {
-  reservada
-  ocupada
-  disponible
 }
 
 enum user_role {

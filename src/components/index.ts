@@ -1,6 +1,7 @@
 //* UI
 //Skeletons
-export * from './ui/skeletons/SkeletonTable';
+export * from './ui/skeletons/SkeletonCustomersTable';
+export * from './ui/skeletons/SkeletonCategoriesTable';
 
 //Pagination
 export * from './ui/pagination-archive/Paginated';
@@ -21,3 +22,4 @@ export * from './ui/select';
 export * from './ui/sheet';
 export * from './ui/Sidebar';
 export * from './ui/separator';
+export * from './ui/alert-dialog';

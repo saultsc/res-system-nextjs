@@ -12,8 +12,8 @@ import {
 	TableRow,
 } from '@/components';
 
-export const SkeletonTable = () => {
-	const skeletonRows = Array.from({ length: 7 }); // Generar 10 filas de esqueleto
+export const SkeletonCustomersTable = () => {
+	const skeletonRows = Array.from({ length: 8 }); // Generar 8 filas de esqueleto
 
 	return (
 		<div>
@@ -22,16 +22,16 @@ export const SkeletonTable = () => {
 					<CardTitle>Cargando..</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<div className={'h-[560px] overflow-y-auto flex justify-center'}>
+					<div className="flex justify-center">
 						<Table>
 							<TableHeader>
 								<TableRow>
 									<TableHead>Codigo</TableHead>
-									<TableHead>Tipo Cliente</TableHead>
-									<TableHead>Documento</TableHead>
-									<TableHead>Nombre</TableHead>
-									<TableHead>Correo</TableHead>
-									<TableHead>Acciones</TableHead>
+									<TableHead className="text-center">Tipo Cliente</TableHead>
+									<TableHead className="text-center">Documento</TableHead>
+									<TableHead className="text-center">Nombre</TableHead>
+									<TableHead className="text-center">Correo</TableHead>
+									<TableHead className="text-center">Acciones</TableHead>
 								</TableRow>
 							</TableHeader>
 							<TableBody>
@@ -40,19 +40,19 @@ export const SkeletonTable = () => {
 										<TableCell>
 											<Skeleton className="h-4 w-full" />
 										</TableCell>
-										<TableCell>
+										<TableCell className="text-center">
 											<Skeleton className="h-4 w-full" />
 										</TableCell>
-										<TableCell>
+										<TableCell className="text-center">
 											<Skeleton className="h-4 w-full" />
 										</TableCell>
-										<TableCell>
+										<TableCell className="text-center">
 											<Skeleton className="h-4 w-full" />
 										</TableCell>
-										<TableCell>
-											<Skeleton className="h-4 w-full" />
+										<TableCell className="text-center">
+											<Skeleton className="text-center h-4 w-full" />
 										</TableCell>
-										<TableCell className="flex gap-2">
+										<TableCell className="text-center flex gap-2">
 											<Skeleton className="h-8 w-8" />
 											<Skeleton className="h-8 w-8" />
 										</TableCell>
