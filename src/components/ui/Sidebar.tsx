@@ -114,7 +114,7 @@ export const Sidebar = () => {
 									<span className="ml-3 text-xl">Categorias</span>
 								</Link>
 								<Link
-									href={'/dashboard/departamentos'}
+									href={'/dashboard/departaments'}
 									className="flex items-center p-2 hover:bg-gray-200 rounded transition-all"
 									prefetch={false}
 									onClick={closeSheet}
@@ -140,7 +140,7 @@ export const Sidebar = () => {
 									<span className="ml-3 text-xl">Mesas</span>
 								</Link>
 								<Link
-									href={'/dashboard/salas'}
+									href={'/dashboard/rooms'}
 									className="flex items-center p-2 hover:bg-gray-200 rounded transition-all"
 									onClick={closeSheet}
 								>

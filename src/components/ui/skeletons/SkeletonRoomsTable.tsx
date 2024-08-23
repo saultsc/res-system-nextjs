@@ -1,35 +1,29 @@
 import {
 	Card,
+	CardContent,
 	CardHeader,
 	CardTitle,
-	CardContent,
 	Table,
-	TableHeader,
-	TableRow,
-	TableHead,
 	TableBody,
 	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
 	Skeleton,
 } from '@/components';
 
-export const SkeletonTablesTable = () => {
-	const skeletonRows = Array.from({ length: 8 }).map((_, index) => (
+export const RoomsTableSkeleton = () => {
+	const skeletonRows = Array.from({ length: 8 }, (_, index) => (
 		<TableRow key={index}>
 			<TableCell>
-				<Skeleton className="h-4 w-16" />
-			</TableCell>
-			<TableCell className="text-center">
-				<Skeleton className="h-4 w-24" />
+				<Skeleton className="h-4 w-20" />
 			</TableCell>
 			<TableCell className="text-center">
 				<Skeleton className="h-4 w-32" />
 			</TableCell>
-			<TableCell className="text-center">
-				<Skeleton className="h-4 w-16" />
-			</TableCell>
 			<TableCell className="flex gap-x-2 justify-center">
-				<Skeleton className="h-8 w-8" />
-				<Skeleton className="h-8 w-8" />
+				<Skeleton className="h-8 w-16" />
+				<Skeleton className="h-8 w-16" />
 			</TableCell>
 		</TableRow>
 	));
@@ -38,7 +32,7 @@ export const SkeletonTablesTable = () => {
 		<div>
 			<Card>
 				<CardHeader className="bg-black/90 rounded-t-md text-white">
-					<CardTitle>Mesas</CardTitle>
+					<CardTitle>Salas</CardTitle>
 				</CardHeader>
 				<CardContent>
 					<div className={'h-[560px] overflow-y-auto flex justify-center'}>
@@ -47,8 +41,6 @@ export const SkeletonTablesTable = () => {
 								<TableRow>
 									<TableHead>Codigo</TableHead>
 									<TableHead className="text-center">Nombre</TableHead>
-									<TableHead className="text-center">Descripción</TableHead>
-									<TableHead className="text-center">Capacidad</TableHead>
 									<TableHead className="text-center">Acciones</TableHead>
 								</TableRow>
 							</TableHeader>
