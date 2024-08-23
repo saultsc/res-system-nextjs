@@ -1,22 +1,26 @@
 'use server';
 
 import { PrismaClient } from '@prisma/client';
-import { RoomForm } from '../components/RoomModal';
-import { revalidatePath } from 'next/cache';
 
 const prisma = new PrismaClient();
 
-export const createRoom = async (data: RoomForm) => {
+interface PostSala {
+	nombre: string;
+}
+
+export const postSala = async ({ nombre }: PostSala) => {
 	try {
-		await prisma.sala.create({
+		const newSala = await prisma.sala.create({
 			data: {
-				nombre: data.nombre,
+				nombre,
 			},
 		});
-
-		revalidatePath('/dashboard/rooms');
+		return newSala;
 	} catch (error) {
-		console.log(error);
+		console.log('Error creating sala:', error);
+		throw error;
+	} finally {
+		await prisma.$disconnect();
 	}
 };
 

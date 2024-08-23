@@ -9,7 +9,6 @@ import {
 	SheetClose,
 	SheetContent,
 	SheetTrigger,
-	DialogTitle,
 	SheetHeader,
 	SheetTitle,
 	DialogDescription,
@@ -25,11 +24,13 @@ import {
 	IoFastFoodOutline,
 	IoTicketOutline,
 } from 'react-icons/io5';
-import { MdOutlineDepartureBoard, MdTableBar } from 'react-icons/md';
+import { MdTableBar } from 'react-icons/md';
+import { useUserStore } from '@/store';
 
 export const Sidebar = () => {
 	const [isMantenimientosOpen, setIsMantenimientosOpen] = useState(false);
 	const [isSheetOpen, setIsSheetOpen] = useState(false);
+	const logout = useUserStore((state) => state.logout);
 
 	const closeSheet = () => {
 		setIsSheetOpen(false);
@@ -56,7 +57,7 @@ export const Sidebar = () => {
 
 					<div className="space-y-4">
 						<Link
-							href={'/peidos'}
+							href={'/dashboard/orders'}
 							className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
 							prefetch={false}
 							onClick={closeSheet}
@@ -65,7 +66,7 @@ export const Sidebar = () => {
 							<span className="ml-3 text-xl">Pedidos</span>
 						</Link>
 						<Link
-							href={'/productos'}
+							href={'/dashboard/products'}
 							className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
 							prefetch={false}
 							onClick={closeSheet}
@@ -113,7 +114,7 @@ export const Sidebar = () => {
 									<BiCategory size={20} />
 									<span className="ml-3 text-xl">Categorias</span>
 								</Link>
-								<Link
+								{/* <Link
 									href={'/dashboard/departaments'}
 									className="flex items-center p-2 hover:bg-gray-200 rounded transition-all"
 									prefetch={false}
@@ -121,7 +122,7 @@ export const Sidebar = () => {
 								>
 									<MdOutlineDepartureBoard size={20} />
 									<span className="ml-3 text-xl">Departamentos</span>
-								</Link>
+								</Link> */}
 								<Link
 									href={'/dashboard/customers'}
 									className="flex items-center p-2 hover:bg-gray-200 rounded transition-all"
@@ -160,7 +161,10 @@ export const Sidebar = () => {
 						</div>
 					</div>
 					<div className="mt-auto">
-						<button className="flex flex-row w-full h-12 items-center justify-center text-white bg-red-500 hover:bg-red-700 rounded-xl">
+						<button
+							onClick={logout}
+							className="flex flex-row w-full h-12 items-center justify-center text-white bg-red-500 hover:bg-red-700 rounded-xl"
+						>
 							<IoLogOutOutline size={20} />
 							<span className="ml-3 text-xl">Salir</span>
 						</button>

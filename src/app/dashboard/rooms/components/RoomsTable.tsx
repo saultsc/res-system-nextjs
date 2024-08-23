@@ -14,6 +14,7 @@ import {
 import RoomModal from './RoomModal';
 import { getPaginatedRooms } from '../actions/get-pagiated.action';
 import { DeleteRoom } from './DeleteRoom';
+import { MesasAssign } from './MesasAssign';
 
 interface Room {
 	id: number;
@@ -41,14 +42,18 @@ export const RoomsTable = async ({ currentPage, query }: QueryParams) => {
 								<TableRow>
 									<TableHead>Codigo</TableHead>
 									<TableHead className="text-center">Nombre</TableHead>
+									<TableHead className="text-center">Asignar</TableHead>
 									<TableHead className="text-center">Acciones</TableHead>
 								</TableRow>
 							</TableHeader>
 							<TableBody>
-								{rooms.map((room: Room) => (
+								{rooms.map((room: any) => (
 									<TableRow key={room.id}>
 										<TableCell>{room.id}</TableCell>
 										<TableCell className="text-center">{room.nombre}</TableCell>
+										<TableCell className="text-center">
+											<MesasAssign room={room} />
+										</TableCell>
 										<TableCell className="flex gap-x-2 justify-center">
 											<RoomModal room={room} action="Edit" />
 											<DeleteRoom id={room.id} />

@@ -1,4 +1,5 @@
 import Header from '@/components/ui/Header';
+import { ToastContainer } from 'react-toastify';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
 	return (
@@ -6,6 +7,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 			<Header />
 
 			<div className="px-0 sm:px-10">{children}</div>
+			<ToastContainer />
 		</main>
 	);
 }

@@ -1,9 +1,13 @@
-import { LoginForm } from './components/LoginFrom';
+'use server';
 
-export default function LoginPage() {
+import { LoginForm } from './ui/LoginForm';
+
+const Login = () => {
 	return (
 		<div>
 			<LoginForm />
 		</div>
 	);
-}
+};
+
+export default Login;

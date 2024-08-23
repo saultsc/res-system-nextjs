@@ -8,8 +8,9 @@ datasource db {
 }
 
 model categoria {
-  id     Int    @id @default(autoincrement())
-  nombre String @unique
+  id       Int        @id @default(autoincrement())
+  nombre   String     @unique
+  producto producto[]
 }
 
 model cliente {
@@ -22,6 +23,18 @@ model cliente {
   email         String?
   limiteCredito String
   telefonno     String?
+}
+
+model producto {
+  id          Int       @id @default(autoincrement())
+  nombre      String
+  descripcion String
+  cantidad    Int
+  precio      Float     @default(0)
+  categoria   categoria @relation(fields: [categoriaId], references: [id])
+  categoriaId Int
+
+  pedidoProducto pedidoProducto[]
 }
 
 model departamento {
@@ -47,8 +60,9 @@ model sala {
 model salamesa {
   salaId Int
   mesaId Int
-  mesa   mesa @relation(fields: [mesaId], references: [id], map: "SalaMesa_mesaId_fkey")
-  sala   sala @relation(fields: [salaId], references: [id], map: "SalaMesa_salaId_fkey")
+  mesa   mesa     @relation(fields: [mesaId], references: [id], map: "SalaMesa_mesaId_fkey")
+  sala   sala     @relation(fields: [salaId], references: [id], map: "SalaMesa_salaId_fkey")
+  pedido pedido[]
 
   @@id([salaId, mesaId])
   @@index([mesaId], map: "SalaMesa_mesaId_fkey")
@@ -60,6 +74,30 @@ model user {
   email    String    @unique(map: "User_email_key")
   password String
   role     user_role @default(user)
+}
+
+model pedido {
+  id                Int              @id @default(autoincrement())
+  cantidadProductos Int
+  estado            String
+  monto             Float
+  salamesa          salamesa         @relation(fields: [salaId, mesaId], references: [salaId, mesaId])
+  salaId            Int
+  mesaId            Int
+  productos         pedidoProducto[]
+
+  @@map("pedidos")
+}
+
+model pedidoProducto {
+  id         Int      @id @default(autoincrement())
+  pedidoId   Int
+  productoId Int
+  cantidad   Int
+  pedido     pedido   @relation(fields: [pedidoId], references: [id])
+  producto   producto @relation(fields: [productoId], references: [id])
+
+  @@map("pedido_productos")
 }
 
 enum user_role {
