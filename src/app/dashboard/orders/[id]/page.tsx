@@ -23,7 +23,7 @@ export default async function EditOrderPage({ params }: { params: { id: string }
 			<h1 className="text-2xl font-bold mb-6">Página de Pedidos</h1>
 			<div className="flex flex-col lg:flex-row gap-6">
 				<EditSummary products={products} salas={salas} mesas={mesas} pedido={pedido} />
-				<ProductList products={products} />
+				<ProductList products={products} pedido={pedido} />
 			</div>
 			<div className="flex justify-between w-full lg:w-auto mt-6">
 				<Link href="/dashboard/orders">
@@ -35,15 +35,17 @@ export default async function EditOrderPage({ params }: { params: { id: string }
 						<span>Volver a Pedidos</span>
 					</Button>
 				</Link>
-				<Link href={`/dashboard/orders/pay/${params.id}`}>
-					<Button
-						variant={'secondary'}
-						className="inline-flex items-center text-blue-500 hover:text-blue-700 mb-4 text-lg py-3 px-6"
-					>
-						<FaCreditCard className="mr-2" />
-						<span>Pagar Pedido</span>
-					</Button>
-				</Link>
+				{pedido?.estado !== 'Pagado' && (
+					<Link href={`/dashboard/orders/pay/${params.id}`}>
+						<Button
+							variant={'secondary'}
+							className="inline-flex items-center text-blue-500 hover:text-blue-700 mb-4 text-lg py-3 px-6"
+						>
+							<FaCreditCard className="mr-2" />
+							<span>Pagar Pedido</span>
+						</Button>
+					</Link>
+				)}
 			</div>
 		</div>
 	);

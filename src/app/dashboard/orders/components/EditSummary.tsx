@@ -87,9 +87,9 @@ export default function EditSummary({ products, salas, mesas, pedido }: OrderSum
 					<CardContent>
 						<ul className="space-y-2">
 							{selectedProducts.length > 0 ? (
-								selectedProducts.map((product, index) => (
+								selectedProducts.map((product) => (
 									<li
-										key={`${product.id}-${index}`}
+										key={product.id}
 										className="flex justify-between items-center"
 									>
 										<span>
@@ -112,9 +112,11 @@ export default function EditSummary({ products, salas, mesas, pedido }: OrderSum
 					</CardContent>
 				</div>
 				<CardFooter className="flex flex-col space-y-4">
-					<Button className="w-full" onClick={handleConfirmOrder}>
-						Confirmar Pedido
-					</Button>
+					{pedido.estado !== 'Pagado' && (
+						<Button className="w-full" onClick={handleConfirmOrder}>
+							Confirmar Pedido
+						</Button>
+					)}
 					<div className="w-full">
 						<label htmlFor="sala" className="block mb-2">
 							Selecciona una sala:
@@ -131,10 +133,8 @@ export default function EditSummary({ products, salas, mesas, pedido }: OrderSum
 									<option value="" disabled>
 										Selecciona una sala
 									</option>
-									{salas.map((sala, index) => (
-										<option key={index} value={sala.id}>
-											{sala.nombre}
-										</option>
+									{salas.map((sala) => (
+										<option value={sala.id}>{sala.nombre}</option>
 									))}
 								</select>
 							</div>
@@ -153,10 +153,8 @@ export default function EditSummary({ products, salas, mesas, pedido }: OrderSum
 									</option>
 									{mesas
 										.filter((mesa) => mesa.salaId === selectedSala)
-										.map((mesa, index) => (
-											<option key={index} value={mesa.id}>
-												{mesa.nombre}
-											</option>
+										.map((mesa) => (
+											<option value={mesa.id}>{mesa.nombre}</option>
 										))}
 								</select>
 							</div>

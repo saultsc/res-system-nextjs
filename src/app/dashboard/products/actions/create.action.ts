@@ -13,6 +13,7 @@ export const createProduct = async (input: ProductForm) => {
 				nombre: input.nombre,
 				descripcion: input.descripcion!,
 				cantidad: input.cantidad,
+				precio: +input.precio,
 				categoriaId: +input.categoriaId,
 			},
 		});
