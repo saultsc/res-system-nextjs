@@ -3,7 +3,7 @@
 import { QueryParams } from '@/interfaces';
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export const getUser = async (queryParams: QueryParams) => {
 	const { id, currentPage = 1, rowPerPage = 10, search } = queryParams;

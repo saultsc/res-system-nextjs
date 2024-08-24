@@ -32,7 +32,7 @@ interface QueryParams {
 	currentPage: number;
 }
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export const ProductsTable = async ({ currentPage, query, category }: QueryParams) => {
 	const { products, totalPages } = await getPaginatedProducts(query, category, currentPage);

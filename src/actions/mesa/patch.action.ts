@@ -1,8 +1,6 @@
 'use server';
 
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 interface PatchMesa {
 	id: string | number;
@@ -18,7 +16,6 @@ export const patchMesa = async ({ id, nombre, capacidad, estado }: PatchMesa) =>
 			data: {
 				nombre,
 				capacidad,
-				estado,
 			},
 		});
 		return updatedMesa;

@@ -2,7 +2,7 @@
 
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export const deleteSala = async (id: string | number) => {
 	try {

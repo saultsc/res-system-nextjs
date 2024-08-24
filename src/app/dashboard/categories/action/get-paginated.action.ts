@@ -2,7 +2,7 @@
 
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export const getPaginatedCategories = async (query: string, currentPage: number = 1) => {
 	const rowsPerPage = 10;

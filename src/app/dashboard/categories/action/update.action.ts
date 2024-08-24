@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import { CategoryForm } from '../components/CategoryModal';
 import { revalidatePath } from 'next/cache';
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export const updateCategory = async (id: number, data: CategoryForm) => {
 	try {

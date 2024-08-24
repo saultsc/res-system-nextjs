@@ -7,7 +7,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { useProductStore } from '@/store/useProductStore';
 import { createPedido } from '@/app/dashboard/orders/actions/create.action';
 import { IoCloseCircle } from 'react-icons/io5';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 type OrderSummaryProps = {
@@ -40,7 +40,7 @@ export default function OrderSummary({ products, salas, mesas }: OrderSummaryPro
 
 		const pedidoData = {
 			cantidadProductos: selectedProducts.length,
-			estado: 'pendiente',
+			estado: 'Pendiente',
 			monto: totalAmount,
 			salaId: selectedSala,
 			mesaId: selectedMesa,
@@ -143,13 +143,11 @@ export default function OrderSummary({ products, salas, mesas }: OrderSummaryPro
 									<option value="" disabled>
 										Selecciona una mesa
 									</option>
-									{mesas
-										.filter((mesa) => mesa.salaId === selectedSala)
-										.map((mesa) => (
-											<option key={mesa.id} value={mesa.id}>
-												{mesa.nombre}
-											</option>
-										))}
+									{filteredMesas.map((mesa) => (
+										<option key={mesa.id} value={mesa.id}>
+											{mesa.nombre}
+										</option>
+									))}
 								</select>
 								{selectedMesa !== null && (
 									<IoCloseCircle

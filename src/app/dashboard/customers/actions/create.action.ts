@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { CustomerForm } from '../components/CustomerModal';
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export const createCustomer = async (customer: CustomerForm) => {
 	try {

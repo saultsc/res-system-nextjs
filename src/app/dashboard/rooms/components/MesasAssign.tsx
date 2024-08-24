@@ -19,7 +19,12 @@ interface Mesa {
 	nombre: string;
 }
 
-export const MesasAssign = ({ salaId, salaNombre }: any) => {
+interface Props {
+	salaId: number;
+	salaNombre: string;
+}
+
+export const MesasAssign = ({ salaId, salaNombre }: Props) => {
 	const [availableMesas, setAvailableMesas] = useState<Mesa[]>([]);
 	const [assignedMesas, setAssignedMesas] = useState<number[]>([]);
 	const [selectedMesas, setSelectedMesas] = useState<number[]>([]);
@@ -28,6 +33,9 @@ export const MesasAssign = ({ salaId, salaNombre }: any) => {
 	useEffect(() => {
 		const fetchMesas = async () => {
 			try {
+				if (!salaId) {
+					throw new Error('salaId is undefined');
+				}
 				const mesas = await getMesasBySalaId(salaId);
 				const assignedMesaIds = mesas.map((mesa: any) => mesa.mesaId);
 				setAssignedMesas(assignedMesaIds);
@@ -67,6 +75,9 @@ export const MesasAssign = ({ salaId, salaNombre }: any) => {
 
 	const handleSubmit = async () => {
 		try {
+			if (!salaId) {
+				throw new Error('salaId is undefined');
+			}
 			const result = await postAssignMesa(salaId, selectedMesas);
 			if (!result.ok) {
 				return toast.error('No se pudo asignar las mesas');
@@ -79,6 +90,7 @@ export const MesasAssign = ({ salaId, salaNombre }: any) => {
 			setIsDialogOpen(false);
 		} catch (error) {
 			console.error('Error assigning mesas:', error);
+			toast.error('Error asignando mesas');
 		}
 	};
 

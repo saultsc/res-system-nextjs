@@ -1,7 +1,7 @@
 'use server';
-import { PrismaClient } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export async function getPedidoById(pedidoId: number) {
 	try {
@@ -30,6 +30,8 @@ export const updatePedido = async (id: number, data: any) => {
 				},
 			},
 		});
+
+		revalidatePath('/dashboard/orders');
 	} catch (error) {
 		console.error('Error updating pedido:', error);
 		throw error;

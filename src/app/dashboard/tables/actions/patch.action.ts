@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import { TableForm } from '../components/TableModal';
 import { revalidatePath } from 'next/cache';
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export const updateTable = async (id: number, { nombre, capacidad, descripcion }: TableForm) => {
 	try {

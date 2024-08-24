@@ -1,10 +1,8 @@
 'use server';
 
-import { PrismaClient } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 type PedidoForm = {
 	cantidadProductos: number;
@@ -34,7 +32,6 @@ export const createPedido = async (input: PedidoForm) => {
 		});
 
 		revalidatePath('/dashboard/orders');
-		redirect('/dashboard/orders');
 	} catch (error) {
 		console.log(error);
 	}

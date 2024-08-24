@@ -16,7 +16,7 @@ export interface Response {
 	token: string;
 }
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export const login = async (credentials: Credentials): Promise<Response> => {
 	try {

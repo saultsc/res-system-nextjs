@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { ProductForm } from '../components/ProductModal';
 
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export const createProduct = async (input: ProductForm) => {
 	try {

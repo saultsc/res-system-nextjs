@@ -52,7 +52,10 @@ export const RoomsTable = async ({ currentPage, query }: QueryParams) => {
 										<TableCell>{room.id}</TableCell>
 										<TableCell className="text-center">{room.nombre}</TableCell>
 										<TableCell className="text-center">
-											<MesasAssign room={room} />
+											<MesasAssign
+												salaId={room.id}
+												salaNombre={room.nombre}
+											/>
 										</TableCell>
 										<TableCell className="flex gap-x-2 justify-center">
 											<RoomModal room={room} action="Edit" />

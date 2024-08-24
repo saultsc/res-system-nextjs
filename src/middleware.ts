@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
 
 	try {
 		if (pathname === '/auth/login') {
-			return NextResponse.redirect(new URL('/', request.url));
+			return NextResponse.redirect(new URL('/dashboard', request.url));
 		}
 	} catch (error) {
 		return NextResponse.redirect(new URL('/auth/login', request.url));

@@ -22,6 +22,19 @@ interface QueryParams {
 	status: string;
 }
 
+const getStatusColor = (status: string) => {
+	switch (status) {
+		case 'Pendiente':
+			return 'bg-yellow-500 text-white';
+		case 'Pagado':
+			return 'bg-green-500 text-white';
+		case 'Cancelado':
+			return 'bg-red-500 text-white';
+		default:
+			return 'bg-gray-500 text-white';
+	}
+};
+
 export const OrdersTable = async ({ currentPage, query, status }: QueryParams) => {
 	const { orders, totalPages } = await getPaginatedOrders(query, status, currentPage);
 
@@ -62,13 +75,24 @@ export const OrdersTable = async ({ currentPage, query, status }: QueryParams) =
 										</TableCell>
 										<TableCell className="text-center">{order.monto}</TableCell>
 										<TableCell className="text-center">
-											{order.estado}
+											<span
+												className={`px-2 py-1 rounded-full text-sm font-semibold ${getStatusColor(
+													order.estado
+												)}`}
+											>
+												{order.estado}
+											</span>
 										</TableCell>
 										<TableCell className="flex gap-x-2 justify-center">
-											{order.estado !== 'pagado' && (
-												<Link href={`orders/${order.id}`}>
+											<Link href={`orders/${order.id}`}>
+												<Button variant="secondary">
+													<IoEyeOutline size={20} />
+												</Button>
+											</Link>
+											{order.estado !== 'Pagado' && (
+												<Link href={`orders/pay/${order.id}`}>
 													<Button variant="secondary">
-														<IoEyeOutline size={20} />
+														<IoCashOutline size={20} />
 													</Button>
 												</Link>
 											)}

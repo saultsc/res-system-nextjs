@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useProductStore } from '@/store/useProductStore';
-import { createPedido } from '@/app/dashboard/orders/actions/create.action';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { updatePedido } from '../../categories/action/action.server';
@@ -46,7 +45,7 @@ export default function EditSummary({ products, salas, mesas, pedido }: OrderSum
 		}
 	}, [pedido]);
 
-	const handleConfirmOrder = async (estado: string) => {
+	const handleConfirmOrder = async () => {
 		if (selectedSala === null || selectedMesa === null) {
 			toast.error('Por favor selecciona una sala y una mesa.');
 			return;
@@ -54,7 +53,7 @@ export default function EditSummary({ products, salas, mesas, pedido }: OrderSum
 
 		const pedidoData = {
 			cantidadProductos: selectedProducts.length,
-			estado: estado,
+			estado: 'Pendiente',
 			monto: totalAmount,
 			salaId: selectedSala,
 			mesaId: selectedMesa,
@@ -66,14 +65,11 @@ export default function EditSummary({ products, salas, mesas, pedido }: OrderSum
 
 		try {
 			await updatePedido(pedido.id, pedidoData);
-			toast.success(`Pedido ${estado}`);
-			router.push('/dashboard/orders'); // Reemplaza con la ruta correcta
+			toast.success('Pedido pendiente');
+			router.push('/dashboard/orders');
 		} catch (error) {
-			toast.error(`Error al ${estado === 'pagado' ? 'pagar' : 'confirmar'} el pedido`);
-			console.error(
-				`Error al ${estado === 'pagado' ? 'pagar' : 'confirmar'} el pedido:`,
-				error
-			);
+			toast.error('Error al confirmar el pedido');
+			console.error('Error al confirmar el pedido:', error);
 		}
 	};
 
@@ -91,9 +87,9 @@ export default function EditSummary({ products, salas, mesas, pedido }: OrderSum
 					<CardContent>
 						<ul className="space-y-2">
 							{selectedProducts.length > 0 ? (
-								selectedProducts.map((product) => (
+								selectedProducts.map((product, index) => (
 									<li
-										key={product.id}
+										key={`${product.id}-${index}`}
 										className="flex justify-between items-center"
 									>
 										<span>
@@ -116,7 +112,7 @@ export default function EditSummary({ products, salas, mesas, pedido }: OrderSum
 					</CardContent>
 				</div>
 				<CardFooter className="flex flex-col space-y-4">
-					<Button className="w-full" onClick={() => handleConfirmOrder('pendiente')}>
+					<Button className="w-full" onClick={handleConfirmOrder}>
 						Confirmar Pedido
 					</Button>
 					<div className="w-full">
@@ -135,8 +131,8 @@ export default function EditSummary({ products, salas, mesas, pedido }: OrderSum
 									<option value="" disabled>
 										Selecciona una sala
 									</option>
-									{salas.map((sala) => (
-										<option key={sala.id} value={sala.id}>
+									{salas.map((sala, index) => (
+										<option key={index} value={sala.id}>
 											{sala.nombre}
 										</option>
 									))}
@@ -157,8 +153,8 @@ export default function EditSummary({ products, salas, mesas, pedido }: OrderSum
 									</option>
 									{mesas
 										.filter((mesa) => mesa.salaId === selectedSala)
-										.map((mesa) => (
-											<option key={mesa.id} value={mesa.id}>
+										.map((mesa, index) => (
+											<option key={index} value={mesa.id}>
 												{mesa.nombre}
 											</option>
 										))}
@@ -170,12 +166,6 @@ export default function EditSummary({ products, salas, mesas, pedido }: OrderSum
 						<span className="font-bold">Total:</span>
 						<span className="font-bold">${totalAmount.toFixed(2)}</span>
 					</div>
-					<Button
-						className="w-full bg-green-500 hover:bg-green-700 text-white"
-						onClick={() => handleConfirmOrder('pagado')}
-					>
-						Pagar
-					</Button>
 				</CardFooter>
 			</Card>
 		</>
